@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML Cards Toolkit — Preview</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --bg: #f5f4f1;
+      --surface: #ffffff;
+      --border: #e2e0db;
+      --text: #1a1714;
+      --text-muted: #7a756e;
+      --accent: #CDA177;
+      --accent-dark: #a87a50;
+      --code-bg: #f0ede8;
+      --radius: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: #251E1C;
+      color: #E2DACD;
+      padding: 40px 48px 36px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .header-left h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+
+    .header-left h1 span { color: var(--accent); }
+
+    .header-left p {
+      font-size: 14px;
+      color: #9e9690;
+      margin-top: 4px;
+    }
+
+    .badge-org {
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      background: rgba(205,161,119,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(205,161,119,0.3);
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    /* ── Nav tabs ── */
+    nav {
+      background: #2e2420;
+      padding: 0 48px;
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid #3d3530;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: #9e9690;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 13px 16px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+
+    nav button:hover { color: #E2DACD; }
+    nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── Main layout ── */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 48px 80px;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ── Section header ── */
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    /* ── Card container (matches toolkit CSS) ── */
+    .preview-frame {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .preview-label {
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 16px;
+    }
+
+    /* ── Toolkit CSS (copy from _CSS.CARD.STYLE) ── */
+    .outspace {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .card {
+      position: relative;
+      flex: 1 1 calc(20% - 6.4px);
+      min-width: 180px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: stretch;
+      flex-direction: row;
+      border-radius: 8px;
+      border: 1px solid #cfd4da;
+      background: #ffffff;
+      word-wrap: break-word;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .card-topbar {
+      width: 3px;
+      flex-shrink: 0;
+      align-self: stretch;
+      background: #69b7c5;
+    }
+
+    .card:nth-child(1)  .card-topbar { background: #2ecc71; }
+    .card:nth-child(2)  .card-topbar { background: #3d7ab5; }
+    .card:nth-child(3)  .card-topbar { background: #69b7c5; }
+    .card:nth-child(4)  .card-topbar { background: #f39c12; }
+    .card:nth-child(5)  .card-topbar { background: #9b59b6; }
+    .card:nth-child(6)  .card-topbar { background: #e74c3c; }
+    .card:nth-child(7)  .card-topbar { background: #bd4c00; }
+    .card:nth-child(8)  .card-topbar { background: #1abc9c; }
+    .card:nth-child(9)  .card-topbar { background: #82004e; }
+    .card:nth-child(10) .card-topbar { background: #008234; }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      padding: 12px 16px;
+      flex: 1;
+    }
+
+    .title {
+      font-size: 11px;
+      color: #6b7280;
+      font-family: 'DM Sans', 'Segoe UI', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .callout {
+      font-size: 24px;
+      font-weight: 600;
+      color: #111827;
+      line-height: 1.15;
+      transition: opacity .25s ease;
+    }
+
+    .callout p { margin: 0; }
+
+    .referenceLabel {
+      font-size: 12px;
+      color: #6b7280;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 5px;
+      flex: 1;
+      gap: 6px;
+    }
+
+    .referenceLabel p { margin: 0; }
+
+    .detailLabel {
+      display: inline-block;
+      font-size: 11px;
+      border-radius: 9px;
+      padding: 1px 8px;
+      line-height: 1.7;
+      flex-shrink: 0;
+      font-weight: 500;
+    }
+
+    .tooltip {
+      display: none;
+    }
+
+    .info {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      color: #CDA177;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 11px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      border: 1px solid #e5e7eb;
+      cursor: default;
+    }
+
+    /* ── Code block ── */
+    .code-block {
+      background: #1e1a17;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'DM Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: #d4cfc8;
+      white-space: pre;
+    }
+
+    .code-block .cm  { color: #7a9f6e; }   /* comment */
+    .code-block .kw  { color: #c9956a; }   /* keyword / function */
+    .code-block .st  { color: #8fa8c8; }   /* string */
+    .code-block .nm  { color: #ddb96a; }   /* number / measure ref */
+    .code-block .fn  { color: #CDA177; }   /* toolkit function */
+
+    /* ── Info grid ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+
+    .info-card h3 {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .info-card p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .info-card code {
+      font-family: 'DM Mono', monospace;
+      font-size: 11.5px;
+      background: var(--code-bg);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: var(--accent-dark);
+    }
+
+    /* ── Color palette swatches ── */
+    .palette {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .swatch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      min-width: 200px;
+    }
+
+    .swatch-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .swatch-info span {
+      display: block;
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-muted);
+    }
+
+    .swatch-info strong {
+      font-size: 13px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>HTML Cards <span>Toolkit</span></h1>
+    <p>Preview interativo · Visual HTML Content Lite · Power BI</p>
+  </div>
+  <span class="badge-org">roqt-pbip</span>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('basic')">Card Simples</button>
+  <button onclick="showTab('multi')">Multi Label</button>
+  <button onclick="showTab('detail')">Com Variação</button>
+  <button onclick="showTab('palette')">Paleta de Cores</button>
+  <button onclick="showTab('ref')">Referência Rápida</button>
+</nav>
+
+<main>
+
+  <!-- ══════════════════════════════════════════ TAB: BASIC ══ -->
+  <section id="tab-basic" class="section active">
+    <p class="section-title">Card Simples — <code style="font-size:14px;font-family:'DM Mono',monospace">_HTML.CARD</code></p>
+    <p class="section-desc">Card básico com título, valor principal (callout) e tooltip opcional ativado pelo botão "i". A barra colorida lateral muda automaticamente conforme a posição do card.</p>
+
+    <div class="preview-frame">
+      <p class="preview-label">Preview</p>
+      <div class="outspace">
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <button class="info">i</button>
+            <p class="title">Receita Total</p>
+            <div class="container">
+              <div class="callout"><p>R$ 1,25 Mi</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Custo Total</p>
+            <div class="container">
+              <div class="callout"><p>R$ 780 k</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Margem Bruta</p>
+            <div class="container">
+              <div class="callout"><p>37,6%</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Nº de Pedidos</p>
+            <div class="container">
+              <div class="callout"><p>4.832</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Ticket Médio</p>
+            <div class="container">
+              <div class="callout"><p>R$ 258,60</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block"><pre><span class="cm">-- Medida: [Cards - KPIs Resumo]</span>
+<span class="kw">VAR</span> _CSS   = <span class="fn">_CSS.CARD.STYLE</span>(0)
+
+<span class="kw">VAR</span> _Cards = <span class="fn">_HTML.CARD</span>(
+    {
+        <span class="cm">-- ( Título,          Valor,              Formato,       Tooltip )</span>
+        (<span class="st">"Receita Total"</span>,  <span class="nm">[Receita Total]</span>,    <span class="st">"R$ #,0"</span>,      <span class="st">"Receita bruta acumulada no período."</span>),
+        (<span class="st">"Custo Total"</span>,    <span class="nm">[Custo Total]</span>,      <span class="st">"R$ #,0"</span>,      <span class="kw">BLANK</span>()),
+        (<span class="st">"Margem Bruta"</span>,   <span class="nm">[Margem Bruta %]</span>,   <span class="st">"0.0%"</span>,        <span class="kw">BLANK</span>()),
+        (<span class="st">"Nº de Pedidos"</span>,  <span class="nm">[Total Pedidos]</span>,    <span class="st">"#,0"</span>,         <span class="kw">BLANK</span>()),
+        (<span class="st">"Ticket Médio"</span>,   <span class="nm">[Ticket Médio]</span>,     <span class="st">"R$ #,0.00"</span>,   <span class="kw">BLANK</span>())
+    }
+)
+
+<span class="kw">RETURN</span> <span class="fn">_HTML.CSS.CARD.CONSTRUCTOR</span>(_CSS, _Cards)</pre></div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ TAB: MULTI ══ -->
+  <section id="tab-multi" class="section">
+    <p class="section-title">Card com Sub-Métricas — <code style="font-size:14px;font-family:'DM Mono',monospace">_HTML.CARD.MULTI_LABEL</code></p>
+    <p class="section-desc">Exibe rótulos adicionais abaixo do valor principal. Ideal para comparativos como Ano Anterior, Meta, Mês Anterior etc.</p>
+
+    <div class="preview-frame">
+      <p class="preview-label">Preview</p>
+      <div class="outspace">
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Receita Total</p>
+            <div class="container">
+              <div class="callout"><p>R$ 1,25 Mi</p></div>
+            </div>
+            <div class="container">
+              <div class="referenceLabel">
+                <p>vs. Ano Ant.&nbsp;&nbsp;R$ 1,10 Mi</p>
+              </div>
+            </div>
+            <div class="container">
+              <div class="referenceLabel">
+                <p>Meta&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R$ 1,30 Mi</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Custo Total</p>
+            <div class="container">
+              <div class="callout"><p>R$ 780 k</p></div>
+            </div>
+            <div class="container">
+              <div class="referenceLabel">
+                <p>vs. Ano Ant.&nbsp;&nbsp;R$ 680 k</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Margem Bruta</p>
+            <div class="container">
+              <div class="callout"><p>37,6%</p></div>
+            </div>
+            <div class="container">
+              <div class="referenceLabel">
+                <p>vs. Ano Ant.&nbsp;&nbsp;38,2%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block"><pre><span class="kw">VAR</span> _CSS = <span class="fn">_CSS.CARD.STYLE</span>(0)
+
+<span class="kw">VAR</span> _Callout = {
+    (<span class="st">"Receita"</span>,  <span class="nm">[Receita Total]</span>,  <span class="st">"R$ #,0"</span>,  <span class="kw">BLANK</span>()),
+    (<span class="st">"Custo"</span>,    <span class="nm">[Custo Total]</span>,    <span class="st">"R$ #,0"</span>,  <span class="kw">BLANK</span>()),
+    (<span class="st">"Margem"</span>,   <span class="nm">[Margem %]</span>,       <span class="st">"0.0%"</span>,    <span class="kw">BLANK</span>())
+}
+
+<span class="cm">-- Value1 deve ser idêntico ao título do card pai (chave de join)</span>
+<span class="kw">VAR</span> _Labels = {
+    (<span class="st">"Receita"</span>,  <span class="st">"vs. Ano Ant."</span>,  <span class="nm">[Receita AA]</span>,  <span class="st">"R$ #,0"</span>,  <span class="st">"Período equivalente"</span>),
+    (<span class="st">"Receita"</span>,  <span class="st">"Meta"</span>,          <span class="nm">[Meta Receita]</span>,<span class="st">"R$ #,0"</span>,  <span class="kw">BLANK</span>()),
+    (<span class="st">"Custo"</span>,    <span class="st">"vs. Ano Ant."</span>,  <span class="nm">[Custo AA]</span>,    <span class="st">"R$ #,0"</span>,  <span class="kw">BLANK</span>()),
+    (<span class="st">"Margem"</span>,   <span class="st">"vs. Ano Ant."</span>,  <span class="nm">[Margem AA]</span>,   <span class="st">"0.0%"</span>,    <span class="kw">BLANK</span>())
+}
+
+<span class="kw">RETURN</span> <span class="fn">_HTML.CSS.CARD.CONSTRUCTOR</span>(
+    _CSS,
+    <span class="fn">_HTML.CARD.MULTI_LABEL</span>(_Callout, _Labels)
+)</pre></div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ TAB: DETAIL ══ -->
+  <section id="tab-detail" class="section">
+    <p class="section-title">Card com Badge de Variação — <code style="font-size:14px;font-family:'DM Mono',monospace">_HTML.CARD.MULTI_LABEL.DETAIL</code></p>
+    <p class="section-desc">Adiciona um badge colorido com seta automática (▲/▼) em cada sub-métrica. A cor reage ao sinal do <code style="font-size:12px;font-family:'DM Mono',monospace">ValorParaCor</code> — permitindo inverter a polaridade para métricas como Custo ou Devoluções.</p>
+
+    <div class="preview-frame">
+      <p class="preview-label">Preview</p>
+      <div class="outspace">
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Receita Total</p>
+            <div class="container">
+              <div class="callout"><p>R$ 1,25 Mi</p></div>
+            </div>
+            <div class="container">
+              <div class="referenceLabel">
+                <p>vs. Ano Ant.&nbsp; R$ 1,10 Mi</p>
+                <span class="detailLabel" style="background:#e8f5e9;color:#283d69;">▲ +13,6%</span>
+              </div>
+            </div>
+            <div class="container">
+              <div class="referenceLabel">
+                <p>vs. Meta&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; R$ 1,30 Mi</p>
+                <span class="detailLabel" style="background:#fdecea;color:#d64545;">▼ −3,8%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Custo Total</p>
+            <div class="container">
+              <div class="callout"><p>R$ 780 k</p></div>
+            </div>
+            <div class="container">
+              <div class="referenceLabel">
+                <p>vs. Ano Ant.&nbsp; R$ 680 k</p>
+                <span class="detailLabel" style="background:#fdecea;color:#d64545;">▼ +14,7%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Nº Pedidos</p>
+            <div class="container">
+              <div class="callout"><p>4.832</p></div>
+            </div>
+            <div class="container">
+              <div class="referenceLabel">
+                <p>vs. Ano Ant.&nbsp; 4.210</p>
+                <span class="detailLabel" style="background:#e8f5e9;color:#283d69;">▲ +14,8%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-topbar"></div>
+          <div class="card-body">
+            <p class="title">Devolução %</p>
+            <div class="container">
+              <div class="callout"><p>3,2%</p></div>
+            </div>
+            <div class="container">
+              <div class="referenceLabel">
+                <p>vs. Ano Ant.&nbsp; 4,1%</p>
+                <span class="detailLabel" style="background:#e8f5e9;color:#283d69;">▲ −0,9pp</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block"><pre><span class="kw">VAR</span> _CSS     = <span class="fn">_CSS.CARD.STYLE</span>(0)
+<span class="kw">VAR</span> _Callout = { (<span class="st">"Receita"</span>, <span class="nm">[Receita]</span>, <span class="st">"R$ #,0"</span>, <span class="kw">BLANK</span>()), (<span class="st">"Custo"</span>, <span class="nm">[Custo]</span>, <span class="st">"R$ #,0"</span>, <span class="kw">BLANK</span>()) }
+<span class="kw">VAR</span> _Labels  = { (<span class="st">"Receita"</span>, <span class="st">"vs. Ano Ant."</span>, <span class="nm">[Rec AA]</span>, <span class="st">"R$ #,0"</span>, <span class="kw">BLANK</span>()), (<span class="st">"Custo"</span>, <span class="st">"vs. Ano Ant."</span>, <span class="nm">[Custo AA]</span>, <span class="st">"R$ #,0"</span>, <span class="kw">BLANK</span>()) }
+
+<span class="kw">VAR</span> _VarRec   = <span class="kw">DIVIDE</span>(<span class="nm">[Receita]</span> - <span class="nm">[Rec AA]</span>,   <span class="nm">[Rec AA]</span>)
+<span class="kw">VAR</span> _VarCusto = <span class="kw">DIVIDE</span>(<span class="nm">[Custo]</span>   - <span class="nm">[Custo AA]</span>, <span class="nm">[Custo AA]</span>)
+
+<span class="kw">VAR</span> _Details = {
+    <span class="cm">-- Receita: positivo = bom → ValorCor igual ao valor</span>
+    (<span class="st">"Receita"</span>, <span class="st">"vs. Ano Ant."</span>, _VarRec,    <span class="st">"0.0%"</span>,  _VarRec),
+    <span class="cm">-- Custo: positivo = ruim → ValorCor negado para inverter cor</span>
+    (<span class="st">"Custo"</span>,   <span class="st">"vs. Ano Ant."</span>, _VarCusto, <span class="st">"0.0%"</span>,  -_VarCusto)
+}
+
+<span class="kw">RETURN</span> <span class="fn">_HTML.CSS.CARD.CONSTRUCTOR</span>(
+    _CSS,
+    <span class="fn">_HTML.CARD.MULTI_LABEL.DETAIL</span>(_Callout, _Labels, _Details)
+)</pre></div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ TAB: PALETTE ══ -->
+  <section id="tab-palette" class="section">
+    <p class="section-title">Paleta de Cores</p>
+    <p class="section-desc">Cores cíclicas das barras laterais dos cards e paleta de relatório acessível via <code style="font-size:13px;font-family:'DM Mono',monospace">_REPORT.DATA.COLOR(ID)</code>.</p>
+
+    <p style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em">Barras laterais dos cards (cíclicas por posição)</p>
+    <div class="palette">
+      <div class="swatch"><div class="swatch-dot" style="background:#2ecc71"></div><div class="swatch-info"><strong>Card 1</strong><span>#2ecc71 — Verde</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#3d7ab5"></div><div class="swatch-info"><strong>Card 2</strong><span>#3d7ab5 — Azul</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#69b7c5"></div><div class="swatch-info"><strong>Card 3</strong><span>#69b7c5 — Ciano</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#f39c12"></div><div class="swatch-info"><strong>Card 4</strong><span>#f39c12 — Laranja</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#9b59b6"></div><div class="swatch-info"><strong>Card 5</strong><span>#9b59b6 — Roxo</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#e74c3c"></div><div class="swatch-info"><strong>Card 6</strong><span>#e74c3c — Vermelho</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#bd4c00"></div><div class="swatch-info"><strong>Card 7</strong><span>#bd4c00 — Marrom</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#1abc9c"></div><div class="swatch-info"><strong>Card 8</strong><span>#1abc9c — Verde-água</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#82004e"></div><div class="swatch-info"><strong>Card 9</strong><span>#82004e — Vinho</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#008234"></div><div class="swatch-info"><strong>Card 10</strong><span>#008234 — Verde musgo</span></div></div>
+    </div>
+
+    <p style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em">_REPORT.DATA.COLOR — Paleta do relatório</p>
+    <div class="palette">
+      <div class="swatch"><div class="swatch-dot" style="background:#CDA177"></div><div class="swatch-info"><strong>ID 1 — Dourado</strong><span>#CDA177</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#322923"></div><div class="swatch-info"><strong>ID 2 — Marrom escuro</strong><span>#322923</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#E2DACD;border:1px solid #ccc"></div><div class="swatch-info"><strong>ID 3 — Bege claro</strong><span>#E2DACD</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#C2622A"></div><div class="swatch-info"><strong>ID 4 — Laranja queimado</strong><span>#C2622A</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#B3B3B3"></div><div class="swatch-info"><strong>ID 5 — Cinza médio</strong><span>#B3B3B3</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#666666"></div><div class="swatch-info"><strong>ID 6 — Cinza escuro</strong><span>#666666</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#251E1C"></div><div class="swatch-info"><strong>ID 7 — Quase preto</strong><span>#251E1C</span></div></div>
+      <div class="swatch"><div class="swatch-dot" style="background:#1AAB40"></div><div class="swatch-info"><strong>ID 8 — Verde</strong><span>#1AAB40</span></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ TAB: REF ══ -->
+  <section id="tab-ref" class="section">
+    <p class="section-title">Referência Rápida</p>
+    <p class="section-desc">Visão geral de todas as funções disponíveis no toolkit.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>🎨 CSS</h3>
+        <p><code>_CSS.CARD.STYLE(Display)</code><br>CSS completo dos cards</p>
+      </div>
+      <div class="info-card">
+        <h3>🎨 CSS</h3>
+        <p><code>_CSS.DETAIL.CARD.STYLE(Medida, Mode)</code><br>Badge por sinal numérico</p>
+      </div>
+      <div class="info-card">
+        <h3>🎨 CSS</h3>
+        <p><code>_CSS.DETAIL.CARD.STYLE.CUSTOMIZED(Bad, Neutral, Good)</code><br>Badge com condições booleanas</p>
+      </div>
+      <div class="info-card">
+        <h3>🏗️ HTML</h3>
+        <p><code>_HTML.CARD(Tabela)</code><br>Card simples</p>
+      </div>
+      <div class="info-card">
+        <h3>🏗️ HTML</h3>
+        <p><code>_HTML.CARD.MULTI_LABEL(Callout, Labels)</code><br>Card com sub-métricas</p>
+      </div>
+      <div class="info-card">
+        <h3>🏗️ HTML</h3>
+        <p><code>_HTML.CARD.MULTI_LABEL.DETAIL(C, L, D)</code><br>Card com badge de variação</p>
+      </div>
+      <div class="info-card">
+        <h3>🏗️ HTML</h3>
+        <p><code>_HTML.CSS.CARD.CONSTRUCTOR(Style, Cards)</code><br>Construtor final — sempre o último</p>
+      </div>
+      <div class="info-card">
+        <h3>🔢 Formato</h3>
+        <p><code>_FORMATTING.NUMBER(n)</code><br>Formato adaptativo (k/Mi/Bi/Tri)</p>
+      </div>
+      <div class="info-card">
+        <h3>🔢 Formato</h3>
+        <p><code>_FORMATTING.NUMBER.SIGNAL_Z(n, +, −)</code><br>Formato com sinal (versão corrigida)</p>
+      </div>
+      <div class="info-card">
+        <h3>🛠️ Util</h3>
+        <p><code>_FILTRO.VALORES(col, nome)</code><br>Texto resumido de filtros ativos</p>
+      </div>
+      <div class="info-card">
+        <h3>🛠️ Util</h3>
+        <p><code>_REPORT.DATA.COLOR(ID)</code><br>Paleta de cores por ID (1–8)</p>
+      </div>
+      <div class="info-card">
+        <h3>🛠️ SVG</h3>
+        <p><code>_SVG.ICONE.FILTRO.CONTAGEM(n, bg, fg)</code><br>Funil SVG com badge contador</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  function showTab(name) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
